@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+:root {
+  /* Light mode - professional indigo and violet colors */
+  --primary: #3D2DB5;
+  --secondary: #7B6FFF;
+  --background: #ffffff;
+  --foreground: #18181b;
+  --muted: #f4f4f5;
+  --border: #e4e4e7;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-zinc-900;
+  }
+}
