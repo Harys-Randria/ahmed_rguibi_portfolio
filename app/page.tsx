@@ -6,16 +6,18 @@ import { Skills } from '@/components/skills'
 import { Contact } from '@/components/contact'
 import { Footer } from '@/components/footer'
 import { Certifications } from '@/components/Certifications'
+import { Recommendations } from '@/components/Recommendations'
 
 export default function Home() {
   return (
-    <main className="bg-white">
+    <main>
       <Navbar />
       <Hero />
       <About />
-      <Experience />
       <Skills />
+      <Experience />
       <Certifications />
+      <Recommendations />
       <Contact />
       <Footer />
     </main>

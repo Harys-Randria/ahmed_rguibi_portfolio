@@ -1,281 +1,161 @@
 'use client'
 
 import { portfolioData } from '@/lib/portfolio-data'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import Image from 'next/image'
 import { ArrowRight, Mail, MapPin, Phone, Star } from 'lucide-react'
-import { useRef } from 'react'
+
+// CORRECTION : Typer explicitement en Variants
+const container: Variants = {
+  hidden: { opacity: 0 },
+  show: { 
+    opacity: 1, 
+    transition: { 
+      staggerChildren: 0.12, 
+      delayChildren: 0.2 
+    } 
+  },
+}
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.5, 
+      ease: 'easeOut' // Framer Motion reconnaît cette string spécifique
+    } 
+  },
+}
 
 export function Hero() {
-  const containerRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start']
-  })
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95])
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 50])
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   const { hero, contact, languages, certifications } = portfolioData
+
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <section
-      ref={containerRef}
       id="accueil"
-      className="relative min-h-screen flex items-center bg-white overflow-hidden"
+      className="relative min-h-screen flex items-center px-6 pt-28 overflow-hidden"
     >
-      {/* Background Elements - Minimal et moderne */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Gradient orb */}
-        <div 
-          className="absolute -top-[30%] -right-[20%] w-[800px] h-[800px] rounded-full opacity-[0.08] blur-[120px]"
-          style={{ background: `radial-gradient(circle, #7B6FFF 0%, #3D2DB5 50%, transparent 100%)` }}
-        />
-        <div 
-          className="absolute -bottom-[30%] -left-[10%] w-[600px] h-[600px] rounded-full opacity-[0.06] blur-[100px]"
-          style={{ background: `radial-gradient(circle, #3D2DB5 0%, #7B6FFF 50%, transparent 100%)` }}
-        />
-        
-        {/* Subtle grid */}
-        <div 
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `linear-gradient(#3D2DB5 1px, transparent 1px), linear-gradient(90deg, #3D2DB5 1px, transparent 1px)`,
-            backgroundSize: '80px 80px'
-          }}
-        />
-      </div>
+      {/* Diagonal light beam */}
+      <div className="absolute pointer-events-none" style={{ top: '-10%', left: '8%', width: '2px', height: '75%', background: 'linear-gradient(to bottom, transparent 0%, rgba(180,200,255,0.6) 40%, rgba(255,255,255,0.7) 55%, rgba(180,200,255,0.4) 70%, transparent 100%)', transform: 'rotate(22deg)', transformOrigin: 'top center', filter: 'blur(1.5px)', opacity: 0.35 }} />
+      <div className="absolute pointer-events-none" style={{ top: '-10%', left: '6%', width: '80px', height: '65%', background: 'linear-gradient(to bottom, transparent, rgba(100,130,255,0.08), transparent)', transform: 'rotate(22deg)', transformOrigin: 'top center', filter: 'blur(20px)' }} />
 
-      <motion.div 
-        style={{ opacity, scale, y }}
-        className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 py-24 md:py-32"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-20 items-center">
-          
-          {/* LEFT - Content */}
-          <div className="space-y-8">
-            
-            {/* Premium Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#3D2DB5]/5 rounded-full border border-[#3D2DB5]/10"
-            >
-              <Star className="w-4 h-4 text-[#7B6FFF] fill-[#7B6FFF]" />
-              <span className="text-sm font-medium text-[#3D2DB5]">
-                {certifications[0].name}
-              </span>
-              <span className="w-1 h-1 rounded-full bg-[#3D2DB5]/30" />
-              <span className="text-sm text-[#3D2DB5]/60">
-                + {certifications.length} certifications
-              </span>
-            </motion.div>
+      {/* Right radial glow */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none" style={{ background: 'radial-gradient(circle at 60% 50%, rgba(37,99,235,0.3) 0%, transparent 65%)', filter: 'blur(30px)' }} />
 
-            {/* Main Heading - Impact maximal */}
-            <div className="space-y-4">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#1a1a2e] leading-[1.1]"
-              >
-                {portfolioData.name.split('  ').map((word, i) => (
-                  <span key={i} className="inline-block">
-                    {word}
-                    {i === 0 && <br className="md:hidden" />}
-                    {i === 0 && ' '}
-                  </span>
-                ))}
-              </motion.h1>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="space-y-2"
-              >
-                <h2 
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold"
-                  style={{ color: '#3D2DB5' }}
-                >
-                  {hero.subtitle}
-                </h2>
-                <p className="text-xl md:text-2xl text-gray-500 font-light">
-                  {hero.highlight}
-                </p>
-              </motion.div>
+      <div className="max-w-[1300px] mx-auto w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center">
+
+        {/* LEFT */}
+        <motion.div variants={container} initial="hidden" animate="show" className="space-y-7">
+
+          {/* Badges */}
+          <motion.div variants={item} className="flex flex-wrap gap-3">
+            <div className="neubrutal px-5 py-2 rounded-xl text-sm font-semibold text-foreground flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-badge" style={{ boxShadow: '0 0 8px #22c55e' }} />
+              {certifications[0].name}
             </div>
-
-            {/* Description - Clean */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-lg text-gray-600 max-w-2xl leading-relaxed"
-            >
-              {hero.description}
-            </motion.p>
-
-            {/* Key Metrics - Bold numbers */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex gap-12 py-4"
-            >
-              {hero.stats.map((stat, index) => (
-                <div key={index}>
-                  <p className="text-5xl md:text-6xl font-bold text-[#3D2DB5] tracking-tight">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm uppercase tracking-wider text-gray-400 font-medium mt-1">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Quick Contact - Subtle */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-wrap items-center gap-6 text-sm text-gray-500"
-            >
-              <div className="flex items-center gap-2 hover:text-[#3D2DB5] transition-colors cursor-pointer">
-                <Mail className="w-4 h-4" />
-                <span>{contact.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span>{contact.phone}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                <span>{contact.address}</span>
-              </div>
-            </motion.div>
-
-            {/* CTA Buttons - Bold */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex flex-wrap gap-4 pt-6"
-            >
-              <button
-                onClick={() => scrollToSection('experience')}
-                className="group relative px-8 py-4 bg-[#3D2DB5] text-white font-semibold rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[#3D2DB5]/30"
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  {hero.buttons[0].label}
-                  <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'linear-gradient(135deg, #7B6FFF 0%, #3D2DB5 100%)' }}
-                />
-              </button>
-              
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-4 font-semibold text-[#3D2DB5] rounded-2xl border-2 border-[#3D2DB5]/20 hover:border-[#3D2DB5] hover:bg-[#3D2DB5]/5 transition-all duration-300"
-              >
-                {hero.buttons[1].label}
-              </button>
-            </motion.div>
-          </div>
-
-          {/* RIGHT - Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1.0] }}
-            className="relative flex justify-center lg:justify-end"
-          >
-            <div className="relative">
-              {/* Main Image Container */}
-              <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px]">
-                {/* Gradient ring */}
-                <div 
-                  className="absolute -inset-4 rounded-full opacity-70 blur-xl"
-                  style={{ background: 'linear-gradient(135deg, #7B6FFF 0%, #3D2DB5 100%)' }}
-                />
-                
-                {/* Image wrapper */}
-                <div className="relative w-full h-full rounded-full overflow-hidden border-[6px] border-white shadow-2xl">
-                  <Image
-                    src={hero.imageUrl}
-                    alt={portfolioData.name}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 768px) 350px, (max-width: 1024px) 450px, 500px"
-                  />
-                </div>
-
-                {/* Floating card - Languages */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6, duration: 0.5 }}
-                  className="absolute -left-6 md:-left-10 bottom-10 bg-white rounded-2xl px-5 py-3 shadow-xl border border-gray-100"
-                >
-                  <div className="flex items-center gap-4">
-                    {languages.map((lang, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <span className="text-xl">{lang.flag}</span>
-                        <div className="text-left">
-                          <p className="text-xs font-semibold text-gray-800">{lang.language}</p>
-                          <p className="text-[10px] text-gray-500 uppercase tracking-wider">{lang.level}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Floating card - PRINCE2 */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
-                  className="absolute -right-4 top-10 bg-[#3D2DB5] rounded-2xl px-5 py-3 shadow-xl"
-                >
-                  <div className="flex items-center gap-2">
-                    <Star className="w-5 h-5 text-[#7B6FFF] fill-[#7B6FFF]" />
-                    <span className="text-sm font-bold text-white">PRINCE2®</span>
-                    <span className="text-xs text-[#7B6FFF] font-medium">Practitioner</span>
-                  </div>
-                </motion.div>
-              </div>
+            <div className="glass px-5 py-2 rounded-xl text-sm font-medium text-muted">
+              + {certifications.length - 1} certifications
             </div>
           </motion.div>
-        </div>
 
-        {/* Scroll hint - Minimal */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          {/* Title */}
+          <motion.div variants={item} className="space-y-1">
+            <p className="text-4xl md:text-5xl lg:text-[3.25rem] font-semibold leading-tight text-foreground/90">
+              {hero.subtitle}
+            </p>
+          </motion.div>
+
+          {/* Description */}
+          <motion.div variants={item} className="flex items-start gap-3">
+            <div className="glass w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1">
+              <ArrowRight className="w-4 h-4 text-accent" />
+            </div>
+            <p className="text-base lg:text-lg text-muted leading-relaxed">
+              {hero.description}
+            </p>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div variants={item} className="flex gap-6 py-2">
+            {hero.stats.map((stat, i) => (
+              <div key={i} className="glass rounded-2xl px-5 py-3 text-center min-w-[100px]">
+                <p className="text-4xl md:text-5xl font-bold tracking-tight text-accent">{stat.value}</p>
+                <p className="text-xs uppercase tracking-wider mt-1 text-muted">{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Quick contact */}
+          <motion.div variants={item} className="flex flex-wrap gap-6 text-sm text-muted">
+            <div className="flex items-center gap-2 hover:text-accent transition-colors cursor-pointer"><Mail className="w-4 h-4" />{contact.email}</div>
+            <div className="flex items-center gap-2"><Phone className="w-4 h-4" />{contact.phone}</div>
+            <div className="flex items-center gap-2"><MapPin className="w-4 h-4" />{contact.address}</div>
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div variants={item} className="flex flex-wrap gap-4 pt-2">
+            <button 
+              onClick={() => scrollTo('experience')} 
+              className="neubrutal flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-foreground font-semibold text-sm cursor-pointer"
+            >
+              {hero.buttons[0].label}
+              <span className="w-2 h-2 rounded-full bg-red-dot animate-pulse" style={{ boxShadow: '0 0 6px #ef4444' }} />
+            </button>
+            <button 
+              onClick={() => scrollTo('contact')} 
+              className="glass-strong px-7 py-3.5 rounded-xl text-sm font-medium text-foreground/80 transition-all hover:text-foreground cursor-pointer"
+            >
+              {hero.buttons[1].label}
+            </button>
+          </motion.div>
+        </motion.div>
+
+        {/* RIGHT: Photo */}
+        <motion.div 
+          initial={{ opacity: 0, x: 40 }} 
+          animate={{ opacity: 1, x: 0 }} 
+          transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }} 
+          className="relative flex justify-center lg:justify-end"
         >
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#3D2DB5]/30 to-[#3D2DB5]/50" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#3D2DB5]/40 font-medium">
-              Scroll
-            </span>
+          <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{ background: 'rgba(59,130,246,0.25)', filter: 'blur(60px)', transform: 'scale(1.15)' }} />
+
+          <div className="border-gradient relative w-[340px] h-[440px] lg:w-[370px] lg:h-[470px] rounded-3xl overflow-hidden">
+            <Image 
+              src={hero.imageUrl} 
+              alt={portfolioData.name} 
+              fill 
+              className="object-cover object-top rounded-3xl" 
+              priority 
+              sizes="(max-width: 1024px) 340px, 370px" 
+            />
+            <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: 'linear-gradient(to top, #03050f 0%, transparent 100%)' }} />
+          </div>
+
+          {/* Floating cards */}
+          <div className="absolute right-[-52px] top-1/2 -translate-y-1/2 flex flex-col gap-3">
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }} 
+              animate={{ opacity: 1, x: 0 }} 
+              transition={{ delay: 0.9 }} 
+              className="neubrutal w-11 h-11 rounded-full flex items-center justify-center"
+            >
+              <Star className="w-5 h-5 text-accent fill-accent" />
+            </motion.div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+        <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-accent/30 to-accent/50" />
+        <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-muted/30">Scroll</span>
+      </div>
     </section>
   )
 }

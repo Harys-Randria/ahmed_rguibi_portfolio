@@ -13,9 +13,9 @@ export const portfolioData = {
   
   // Contact complet
   contact: {
-    email: 'a.rguibi@outlook.com',
+    email: 'a.rguibi@maaian.fr',
     phone: '+33 (0)6 59 34 56 55',
-    address: '40 rue Gabriel Peri, 78210 St Cyr l\'École',
+    address: 'Île-deFrance. Déplacements ponctuels en Europe acceptés',
     location: 'Saint-Cyr-l\'École, Île-de-France',
   },
   
@@ -48,8 +48,8 @@ export const portfolioData = {
   navLinks: [
     { id: 'accueil', label: 'Accueil' },
     { id: 'apropos', label: 'À propos' },
-    { id: 'experience', label: 'Expérience' },
     { id: 'competences', label: 'Compétences' },
+    { id: 'experience', label: 'Expérience' },
     { id: 'certifications', label: 'Certifications' },
     { id: 'contact', label: 'Contact' },
   ],
@@ -59,16 +59,16 @@ export const portfolioData = {
   // ==========================================
   hero: {
     title: 'Ahmed RGUIBI',
-    subtitle: 'PMO / Chef de projet senior',
-    highlight: 'Pilotage • Gouvernance • Redressement',
-    description: 'Expert en intervention pompier sur projets IT en difficulté. Méthode M.A.A.I.A.N. pour diagnostic rapide et redressement de projets complexes.',
+    subtitle: 'Expert en pilotage et redressement de projets IT complexes',
+    highlight: 'Pas des retards',
+    description: 'J\'aligne vos enjeux IT avec vos objectifs business',
     buttons: [
       { label: 'Découvrir mon parcours', variant: 'primary', href: '#experience' },
       { label: 'Me contacter', variant: 'outline', href: '#contact' },
     ],
     stats: [
       { value: '16+', label: 'Années d\'expérience' },
-      { value: '20+', label: 'Projets B2B pilotés' },
+      { value: '50+', label: 'Projets B2B pilotés' },
       { value: '8', label: 'Grands comptes' },
     ],
     imageUrl: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ahmed-IM1cxDQhJFThQiyggQnWJiZpvpCM7l.png',
@@ -86,7 +86,7 @@ export const portfolioData = {
     
     Expérience significative en environnement international dans les secteurs banque, assurance et services.`,
     highlights: [
-      'Intervention pompier sur projets en difficulté',
+      'Pilotage de projets en tension',
       'Méthode exclusive M.A.A.I.A.N.',
       'Environnement international (France-Suisse)',
       'Certifié PRINCE2 Foundation & Practitioner',
@@ -106,7 +106,7 @@ export const portfolioData = {
       role: 'PMO / Chef de Projet Senior',
       company: 'MAAIAN',
       companyType: 'Conseil indépendant',
-      description: 'Conseil indépendant spécialisé en intervention pompier sur projets IT en difficulté. Diagnostic rapide des dysfonctionnements organisationnels, restructuration de la gouvernance et remise sur les rails de projets bloqués.',
+      description: 'Conception et déploiement de la méthode M.A.A.I.A.N. : framework propriétaire de diagnostic et redressement de projets IT complexes, appliqué auprès de directions IT en contexte de tension ou de transformation.',
       achievements: [
         'Développement de la méthode M.A.A.I.A.N. pour le redressement de projets complexes',
         'Réalisation de diagnostics de performance projet auprès de directions IT et métiers',
@@ -122,7 +122,7 @@ export const portfolioData = {
       role: 'PMO / IT Delivery Manager',
       company: 'Rothschild Martin Maurel',
       companyType: 'Banque privée',
-      description: 'Pilotage global du programme DWH avec coordination France-Suisse. Suivi budgétaire rigoureux et reporting consolidé pour la direction.',
+      description: 'Pilotage d\'un programme DWH de ~10M€ sur 4 équipes distribuées (IT et métier France/Suisse). Coordination multi-instances jusqu\'au top management. Remise en trajectoire du programme et livraison du serveur en production.',
       achievements: [
         'Construction et mise à jour de tableaux de bord stratégiques (avancement, risques, dépendances, KPI)',
         'Animation des comités projets et instances de gouvernance (COPIL, COPROJ)',
@@ -139,7 +139,7 @@ export const portfolioData = {
       role: 'PMO / Chef de projet senior',
       company: 'Allianz',
       companyType: 'Assurance',
-      description: 'Pilotage du portefeuille projet Self-Service Portal avec conformité RGPD.',
+      description: 'Pilotage d\'un programme SelfService Portal (2-5M€) en contexte international (IT Europe et Asie, métiers France). Mission de 12 mois. Portail livré en production dans les délais, sans rollback post-prod.',
       achievements: [
         'Suivi du portefeuille projet : planification, budget, arbitrage des priorités',
         'Mise en place de reporting régulier à destination de la direction',
@@ -395,8 +395,43 @@ export const portfolioData = {
   // ==========================================
   footer: {
     copyright: '© 2026 Ahmed RGUIBI. Tous droits réservés.',
-    tagline: 'PMO / Chef de projet senior - Pilotage | Gouvernance | Redressement',
+    tagline: 'PMO / Chef de projet senior - Pilotage | Gouvernance | Diagnostic & Redressement',
   },
+
+   // ==========================================
+  // RECOMMANDATIONS / TÉMOIGNAGES
+  // ==========================================
+  recommendations: {
+    title: 'Recommandations',
+    subtitle: 'Ce que disent mes clients et collaborateurs',
+    items: [
+      {
+        id: 1,
+        name: 'Ronan Jaffré',
+        role: 'Dev / Manager',
+        company: 'Malt',
+        relation: 'Freelance',
+        platform: 'Malt',
+        text: 'Ahmed est un Delivery Manager solide, avec une vraie expérience du pilotage de programmes complexes. Il sait reprendre un projet en tension, remettre de la structure et sécuriser la delivery. Bon sens de l\'arbitrage, méthodo carrée, à l\'aise avec les grands comptes. Un profil que je recommande pour des missions exigeantes.',
+        highlights: ['Delivery Management', 'Projets en tension', 'Grands comptes', 'Arbitrage'],
+        date: '2026-04-18',
+        verified: true,
+      },
+      {
+        id: 2,
+        name: 'Johan Barraud',
+        role: 'Key Account Manager',
+        company: 'Checkpoint Systems',
+        relation: 'Collaboration projet',
+        platform: 'LinkedIn',
+        text: 'Ahmed a été un élément clé dans le succès de nos opérations avec nos clients Retail. Il a su mener à bien des projets urgents avec demande de livraison très rapide, comme des projets long terme nécessitant un pilotage complexe au milieu de parties prenantes exigeantes et internationales. Sa capacité à bien cadrer les projets en amont lors des réunions d\'introduction pour anticiper tous les scénarios et livrer une v1 la plus efficace possible est très appréciée. Très belle expérience à ses côtés. Johan B.',
+        highlights: ['Clients Retail', 'Livraison rapide', 'Pilotage complexe', 'Cadrage projet', 'International'],
+        date: '2026-02-13',
+        verified: true,
+      },
+    ],
+  },
+
 };
 
 // Type export for TypeScript usage

@@ -1,14 +1,27 @@
 'use client'
 
 import { portfolioData } from '@/lib/portfolio-data'
-import { motion } from 'framer-motion'
-import { Award, Calendar, ExternalLink, GraduationCap, BookOpen, Building2 } from 'lucide-react'
-import Image from 'next/image'
+import { motion, type Variants } from 'framer-motion'
+import { Award, Calendar, ExternalLink, GraduationCap, BookOpen, Building2, Globe, Sparkles } from 'lucide-react'
+
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
+
+const staggerCard: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' },
+  }),
+}
 
 export function Certifications() {
   const { certifications, languages } = portfolioData
 
-  // Formations complémentaires (issues du CV)
+  // Formations complémentaires enrichies
   const formations = [
     {
       id: 1,
@@ -17,16 +30,18 @@ export function Certifications() {
       year: '2020',
       description: 'Certification en gestion de projet selon la méthodologie PRINCE2, reconnue internationalement.',
       icon: '🏆',
-      type: 'certification',
+      type: 'certification' as const,
+      verified: true,
     },
     {
       id: 2,
       title: 'Jira / Confluence / Jira Service Management',
       issuer: 'Atlassian',
       year: '2024',
-      description: 'Certification sur la suite Atlassian pour le pilotage de projets, la collaboration et la gestion de services.',
+      description: 'Maîtrise opérationnelle sur la suite Atlassian pour le pilotage de projets, la collaboration et la gestion de services.',
       icon: '🛠️',
-      type: 'certification',
+      type: 'certification' as const,
+      verified: false,
     },
     {
       id: 3,
@@ -35,7 +50,8 @@ export function Certifications() {
       year: '2016',
       description: 'Formation intensive en développement logiciel et architecture des systèmes d\'information.',
       icon: '💻',
-      type: 'formation',
+      type: 'formation' as const,
+      verified: false,
     },
     {
       id: 4,
@@ -44,131 +60,169 @@ export function Certifications() {
       year: '2011',
       description: 'Formation en management stratégique, pilotage d\'entreprise et gestion de projets transverses.',
       icon: '🎓',
-      type: 'diplome',
+      type: 'diplome' as const,
+      verified: false,
     },
   ]
 
-  // Compétences linguistiques avec drapeaux
+  // Compétences linguistiques
   const languageDetails = [
     { language: 'Français', level: 'Natif', flag: '🇫🇷', proficiency: 100 },
     { language: 'Anglais', level: 'Bilingue', flag: '🇬🇧', proficiency: 95 },
     { language: 'Arabe', level: 'Courant', flag: '🇲🇦', proficiency: 80 },
   ]
 
-  const getTypeStyle = (type: string) => {
+  const getTypeConfig = (type: 'certification' | 'formation' | 'diplome') => {
     switch (type) {
       case 'certification':
-        return { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', icon: Award }
+        return { 
+          icon: Award, 
+          badgeColor: 'text-amber-400', 
+          bgBadge: 'bg-amber-400/10',
+          borderBadge: 'border-amber-400/30',
+          label: 'Certification',
+          accent: 'amber',
+        }
       case 'formation':
-        return { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: BookOpen }
+        return { 
+          icon: BookOpen, 
+          badgeColor: 'text-blue-400', 
+          bgBadge: 'bg-blue-400/10',
+          borderBadge: 'border-blue-400/30',
+          label: 'Formation',
+          accent: 'blue',
+        }
       case 'diplome':
-        return { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', icon: GraduationCap }
-      default:
-        return { bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200', icon: Award }
+        return { 
+          icon: GraduationCap, 
+          badgeColor: 'text-emerald-400', 
+          bgBadge: 'bg-emerald-400/10',
+          borderBadge: 'border-emerald-400/30',
+          label: 'Diplôme',
+          accent: 'emerald',
+        }
     }
   }
 
   return (
     <section
       id="certifications"
-      className="relative py-32 md:py-40 px-6 md:px-12 lg:px-20 bg-white overflow-hidden"
+      className="relative py-32 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden"
     >
-      {/* Background decoration */}
+      {/* ==========================================
+          BACKGROUND — Double orbe subtile
+          ========================================== */}
       <div className="absolute inset-0 pointer-events-none">
         <div 
-          className="absolute top-1/3 -right-[20%] w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #7B6FFF 0%, #3D2DB5 50%, transparent 100%)' }}
+          className="absolute top-1/4 -right-[25%] w-[600px] h-[600px] rounded-full opacity-[0.05] blur-[140px]"
+          style={{ background: 'radial-gradient(circle, #8b5cf6 0%, transparent 70%)' }}
         />
         <div 
-          className="absolute -bottom-[10%] -left-[10%] w-[500px] h-[500px] rounded-full opacity-[0.03] blur-[100px]"
-          style={{ background: 'radial-gradient(circle, #3D2DB5 0%, #7B6FFF 50%, transparent 100%)' }}
+          className="absolute -bottom-[15%] -left-[15%] w-[500px] h-[500px] rounded-full opacity-[0.04] blur-[120px]"
+          style={{ background: 'radial-gradient(circle, #3b82f6 0%, transparent 70%)' }}
         />
       </div>
 
       <div className="relative z-10 max-w-[1200px] mx-auto">
         
-        {/* Section Header */}
+        {/* ==========================================
+            SECTION HEADER
+            ========================================== */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
           className="mb-16 md:mb-20 text-center"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-8 h-[2px] bg-[#7B6FFF]" />
-            <span className="text-sm font-medium uppercase tracking-wider text-[#7B6FFF]">
+          {/* Ligne décorative centrée */}
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-[2px] bg-accent" />
+            <span className="text-sm font-medium uppercase tracking-wider text-accent">
               Qualifications
             </span>
-            <div className="w-8 h-[2px] bg-[#7B6FFF]" />
+            <div className="w-8 h-[2px] bg-accent" />
           </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#1a1a2e] tracking-tight leading-[1.1] max-w-4xl mx-auto">
+          
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight leading-[1.1] max-w-4xl mx-auto">
             Certifications
             <br />
-            <span className="text-[#3D2DB5]">& formations</span>
+            <span className="text-accent">& formations</span>
           </h2>
-          <p className="text-lg text-gray-500 mt-6 max-w-2xl mx-auto">
+          
+          <p className="text-lg text-muted mt-6 max-w-2xl mx-auto">
             Un parcours de formation continue pour maintenir l'excellence en pilotage de projets.
           </p>
         </motion.div>
 
-        {/* Main Grid - Certifications & Formations */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {/* ==========================================
+            MAIN GRID — Certifications & Formations
+            ========================================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
           {formations.map((item, index) => {
-            const typeStyle = getTypeStyle(item.type)
-            const TypeIcon = typeStyle.icon
+            const typeConfig = getTypeConfig(item.type)
+            const TypeIcon = typeConfig.icon
             
             return (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                variants={staggerCard}
+                custom={index}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="group relative bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                whileHover={{ y: -6 }}
+                className="group relative"
               >
-                {/* Badge type */}
-                <div className={`absolute -top-3 left-6 px-4 py-1.5 ${typeStyle.bg} ${typeStyle.text} rounded-full text-xs font-semibold uppercase tracking-wider border ${typeStyle.border} flex items-center gap-1.5`}>
-                  <TypeIcon className="w-3.5 h-3.5" />
-                  {item.type}
-                </div>
-
-                <div className="flex items-start gap-4">
-                  {/* Icône */}
-                  <div className="text-4xl">{item.icon}</div>
+                {/* ===== Carte glass-strong pour les certifs, glass pour le reste ===== */}
+                <div className={`relative rounded-2xl p-7 h-full transition-all duration-300 ${
+                  item.type === 'certification' 
+                    ? 'glass-strong border-accent/20' 
+                    : 'glass hover:border-accent/20'
+                }`}>
                   
-                  <div className="flex-1">
-                    {/* Titre et année */}
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#3D2DB5] transition-colors">
-                        {item.title}
-                      </h3>
-                      <span className="flex items-center gap-1.5 text-sm font-medium text-[#7B6FFF] bg-[#7B6FFF]/5 px-3 py-1 rounded-full whitespace-nowrap">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {item.year}
-                      </span>
-                    </div>
+                  {/* Badge type — Flottant en haut */}
+                  <div className={`absolute -top-3.5 left-6 px-4 py-1.5 ${typeConfig.bgBadge} ${typeConfig.badgeColor} rounded-full text-xs font-semibold uppercase tracking-wider border ${typeConfig.borderBadge} flex items-center gap-1.5 backdrop-blur-md`}>
+                    <TypeIcon className="w-3.5 h-3.5" />
+                    {typeConfig.label}
+                  </div>
 
-                    {/* Organisme */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <Building2 className="w-4 h-4 text-gray-400" />
-                      <span className="text-gray-600 font-medium">{item.issuer}</span>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-500 text-sm leading-relaxed mb-4">
-                      {item.description}
-                    </p>
-
-                    {/* Badge de vérification */}
-                    {item.type === 'certification' && (
-                      <div className="flex items-center gap-2 text-xs text-emerald-600">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        <span>Certification vérifiée</span>
-                        <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="flex items-start gap-4 mt-2">
+                    {/* Icône émoji */}
+                    <div className="text-4xl shrink-0">{item.icon}</div>
+                    
+                    <div className="flex-1 min-w-0">
+                      {/* Titre et année */}
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <h3 className="text-lg font-bold text-foreground group-hover:text-accent transition-colors leading-tight">
+                          {item.title}
+                        </h3>
+                        <span className="flex items-center gap-1.5 text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full whitespace-nowrap shrink-0">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {item.year}
+                        </span>
                       </div>
-                    )}
+
+                      {/* Organisme */}
+                      <div className="flex items-center gap-2 mb-3">
+                        <Building2 className="w-4 h-4 text-muted shrink-0" />
+                        <span className="text-muted text-sm font-medium truncate">{item.issuer}</span>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-muted/80 text-sm leading-relaxed mb-4">
+                        {item.description}
+                      </p>
+
+                      {/* Badge de vérification — Uniquement pour les certifications */}
+                      {item.verified && (
+                        <div className="flex items-center gap-2 text-xs text-green-badge">
+                          <Sparkles className="w-3 h-3" />
+                          <span>Certification vérifiée</span>
+                          <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -176,64 +230,74 @@ export function Certifications() {
           })}
         </div>
 
-        {/* Langues Section */}
+        {/* ==========================================
+            LANGUES — Section dédiée
+            ========================================== */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-gradient-to-br from-white to-[#3D2DB5]/[0.02] rounded-3xl p-8 md:p-10 border border-gray-100"
+          className="glass-strong rounded-3xl p-8 md:p-10"
         >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-[#7B6FFF]/10 flex items-center justify-center">
-              <span className="text-2xl">🌍</span>
+          {/* En-tête langues */}
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center">
+              <Globe className="w-6 h-6 text-accent" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-[#1a1a2e]">Langues</h3>
-              <p className="text-sm text-gray-500">Communication internationale</p>
+              <h3 className="text-2xl font-bold text-foreground">Langues</h3>
+              <p className="text-sm text-muted">Communication internationale</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Grille des langues */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {languageDetails.map((lang, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                variants={staggerCard}
+                custom={index}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-                className="space-y-3"
+                className="space-y-4"
               >
+                {/* Drapeau + Nom + Niveau */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{lang.flag}</span>
-                    <span className="font-semibold text-gray-800">{lang.language}</span>
+                    <span className="font-semibold text-foreground">{lang.language}</span>
                   </div>
-                  <span className="text-sm font-medium text-[#7B6FFF]">{lang.level}</span>
+                  <span className="text-sm font-semibold text-accent">{lang.level}</span>
                 </div>
                 
-                {/* Barre de progression */}
-                <div className="relative h-2 bg-gray-100 rounded-full overflow-hidden">
+                {/* Barre de progression modernisée */}
+                <div className="relative h-2 bg-surface rounded-full overflow-hidden border border-border">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${lang.proficiency}%` }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.8 + index * 0.1, ease: "easeOut" }}
-                    className="absolute inset-y-0 left-0 rounded-full"
-                    style={{ background: 'linear-gradient(90deg, #3D2DB5 0%, #7B6FFF 100%)' }}
-                  />
+                    transition={{ duration: 1.2, delay: 0.3 + index * 0.15, ease: 'easeOut' }}
+                    className="absolute inset-y-0 left-0 rounded-full bg-accent"
+                  >
+                    {/* Micro-glow sur la barre */}
+                    <div className="absolute inset-0 rounded-full bg-accent opacity-50 blur-sm" />
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Autres compétences */}
+        {/* ==========================================
+            AUTRES COMPÉTENCES — Mini cartes
+            ========================================== */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
           className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {[
@@ -242,24 +306,28 @@ export function Certifications() {
             { label: 'Agile / Scrum', value: 'Maîtrise avancée' },
             { label: 'Cycle en V', value: 'Expert' },
           ].map((item, index) => (
-            <div key={index} className="text-center p-4 rounded-xl bg-gray-50">
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{item.label}</p>
-              <p className="text-sm font-semibold text-[#3D2DB5]">{item.value}</p>
+            <div key={index} className="glass rounded-xl p-4 text-center card-3d cursor-default">
+              <p className="text-xs text-muted uppercase tracking-wider mb-1.5">{item.label}</p>
+              <p className="text-sm font-semibold text-accent">{item.value}</p>
             </div>
           ))}
         </motion.div>
 
-        {/* Note de bas de page */}
+        {/* ==========================================
+            NOTE DE BAS — Discrète
+            ========================================== */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.7 }}
           className="mt-12 text-center"
         >
-          <p className="text-sm text-gray-400">
-            Formation continue • Veille méthodologique • Amélioration continue des pratiques
-          </p>
+          <div className="glass inline-block rounded-full px-6 py-3">
+            <p className="text-sm text-muted">
+              Formation continue • Veille méthodologique • Amélioration continue des pratiques
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>

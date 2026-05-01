@@ -1,13 +1,27 @@
 'use client'
 
 import { portfolioData } from '@/lib/portfolio-data'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { useState } from 'react'
-import { Briefcase, Calendar, ChevronDown, ChevronUp, MapPin, CheckCircle2 } from 'lucide-react'
+import { Briefcase, Calendar, ChevronDown, ChevronUp, CheckCircle2, Building2 } from 'lucide-react'
+
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
+
+const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' },
+  }),
+}
 
 export function Experience() {
   const { experiences } = portfolioData
-  const [expandedId, setExpandedId] = useState<number | null>(1) // Première expérience ouverte par défaut
+  const [expandedId, setExpandedId] = useState<number | null>(1)
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id)
@@ -16,43 +30,49 @@ export function Experience() {
   return (
     <section
       id="experience"
-      className="relative py-32 md:py-40 px-6 md:px-12 lg:px-20 bg-white overflow-hidden"
+      className="relative py-32 md:py-40 px-6 md:px-12 lg:px-20 overflow-hidden"
     >
-      {/* Background decoration */}
+      {/* ==========================================
+          BACKGROUND — Orbe unique pour cette section
+          ========================================== */}
       <div className="absolute inset-0 pointer-events-none">
         <div 
-          className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full opacity-[0.03] blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #3D2DB5 0%, #7B6FFF 50%, transparent 100%)' }}
+          className="absolute top-1/2 -translate-y-1/2 left-0 w-[500px] h-[700px] rounded-full opacity-[0.06] blur-[150px]"
+          style={{ background: 'radial-gradient(ellipse, #8b5cf6 0%, #3b82f6 40%, transparent 70%)' }}
         />
       </div>
 
       <div className="relative z-10 max-w-[1200px] mx-auto">
         
-        {/* Section Header */}
+        {/* ==========================================
+            SECTION HEADER
+            ========================================== */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
           className="mb-16 md:mb-20"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-[2px] bg-[#7B6FFF]" />
-            <span className="text-sm font-medium uppercase tracking-wider text-[#7B6FFF]">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-8 h-[2px] bg-accent" />
+            <span className="text-sm font-medium uppercase tracking-wider text-accent">
               Parcours
             </span>
           </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#1a1a2e] tracking-tight leading-[1.1] max-w-4xl">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight leading-[1.1] max-w-4xl">
             16 ans d'expérience
             <br />
-            <span className="text-[#3D2DB5]">au service de projets critiques</span>
+            <span className="text-accent">au service de projets critiques</span>
           </h2>
         </motion.div>
 
-        {/* Timeline */}
+        {/* ==========================================
+            TIMELINE
+            ========================================== */}
         <div className="relative">
-          {/* Ligne verticale de timeline */}
-          <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#7B6FFF] via-[#3D2DB5] to-transparent opacity-20" />
+          {/* Ligne verticale — Plus visible et moderne */}
+          <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent via-primary to-transparent opacity-25" />
 
           <div className="space-y-0">
             {experiences.map((exp, index) => {
@@ -62,102 +82,126 @@ export function Experience() {
               return (
                 <motion.div
                   key={exp.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  variants={staggerItem}
+                  custom={index}
+                  initial="hidden"
+                  whileInView="visible"
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   className={`relative flex flex-col md:flex-row items-start gap-6 md:gap-12 py-8 md:py-12 ${
                     isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
                   }`}
                 >
-                  {/* Point sur la timeline */}
-                  <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-[#7B6FFF] border-4 border-white shadow-lg z-10" />
+                  {/* ==========================================
+                      POINT TIMELINE — Avec glow pulse
+                      ========================================== */}
+                  <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 z-10">
+                    <div className="w-5 h-5 rounded-full bg-accent border-[3px] border-surface relative">
+                      {/* Glow externe */}
+                      <div className="absolute inset-0 rounded-full bg-accent opacity-40 blur-sm animate-pulse" />
+                    </div>
+                  </div>
 
-                  {/* Date - Mobile */}
-                  <div className="md:hidden flex items-center gap-2 text-sm font-medium text-[#7B6FFF] mb-2">
+                  {/* Date — Mobile */}
+                  <div className="md:hidden flex items-center gap-2 text-sm font-semibold text-accent mb-2">
                     <Calendar className="w-4 h-4" />
                     <span>{exp.period}</span>
                   </div>
 
-                  {/* Contenu */}
+                  {/* ==========================================
+                      CONTENU — Carte glass ou neubrutal
+                      ========================================== */}
                   <div className={`w-full md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-8' : 'md:pl-8'}`}>
-                    {/* En-tête de l'expérience */}
+                    {/* Carte principale */}
                     <div 
                       onClick={() => toggleExpand(exp.id)}
-                      className="group cursor-pointer"
+                      className={`group cursor-pointer transition-all duration-300 ${
+                        isExpanded 
+                          ? 'glass-strong rounded-2xl p-6 shadow-lg' 
+                          : 'glass rounded-2xl p-6 hover:border-accent/30'
+                      }`}
                     >
-                      {/* Type d'entreprise */}
+                      {/* Type d'entreprise — Badge neubrutal */}
                       <div className="flex items-center gap-3 mb-3">
-                        <span className="text-xs font-medium uppercase tracking-wider text-[#7B6FFF] bg-[#7B6FFF]/10 px-3 py-1 rounded-full">
+                        <span className="neubrutal text-xs font-medium uppercase tracking-wider px-3 py-1">
                           {exp.companyType}
                         </span>
+                        {/* Point vert si c'est le poste actuel */}
+                        {exp.period.includes('En cours') && (
+                          <span className="flex items-center gap-1.5 text-xs text-green-badge">
+                            <span className="w-2 h-2 rounded-full bg-green-badge animate-pulse" />
+                            Actuel
+                          </span>
+                        )}
                       </div>
 
                       {/* Rôle et entreprise */}
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="text-2xl md:text-3xl font-bold text-[#1a1a2e] group-hover:text-[#3D2DB5] transition-colors duration-300">
+                          <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-accent transition-colors duration-300">
                             {exp.role}
                           </h3>
-                          <div className="flex items-center gap-2 mt-1">
-                            <Briefcase className="w-4 h-4 text-[#7B6FFF]" />
-                            <p className="text-lg text-gray-600 font-medium">
+                          <div className="flex items-center gap-2 mt-1.5">
+                            <Building2 className="w-4 h-4 text-accent/60" />
+                            <p className="text-base text-muted font-medium">
                               {exp.company}
                             </p>
                           </div>
                         </div>
                         
-                        {/* Date - Desktop */}
-                        <div className="hidden md:flex items-center gap-2 text-sm font-medium text-[#7B6FFF] whitespace-nowrap">
+                        {/* Date — Desktop */}
+                        <div className="hidden md:flex items-center gap-2 text-sm font-semibold text-accent whitespace-nowrap">
                           <Calendar className="w-4 h-4" />
                           <span>{exp.period}</span>
                         </div>
 
-                        {/* Toggle icône */}
-                        <button className="md:hidden p-2 rounded-full hover:bg-[#3D2DB5]/5 transition-colors">
+                        {/* Toggle icône — Mobile */}
+                        <button className="md:hidden p-2 rounded-full hover:bg-accent/10 transition-colors">
                           {isExpanded ? (
-                            <ChevronUp className="w-5 h-5 text-[#7B6FFF]" />
+                            <ChevronUp className="w-5 h-5 text-accent" />
                           ) : (
-                            <ChevronDown className="w-5 h-5 text-[#7B6FFF]" />
+                            <ChevronDown className="w-5 h-5 text-accent" />
                           )}
                         </button>
                       </div>
 
                       {/* Description courte */}
-                      <p className="text-gray-600 mt-3 leading-relaxed">
+                      <p className="text-muted mt-3 leading-relaxed text-sm">
                         {exp.description}
                       </p>
 
-                      {/* Tags */}
+                      {/* Tags — Version moderne */}
                       <div className="flex flex-wrap gap-2 mt-4">
                         {exp.tags.slice(0, 4).map((tag, i) => (
                           <span
                             key={i}
-                            className="px-3 py-1.5 text-xs font-medium text-[#3D2DB5] bg-[#3D2DB5]/5 rounded-full border border-[#3D2DB5]/10"
+                            className="px-3 py-1.5 text-xs font-medium text-accent bg-accent/10 rounded-full border border-accent/20"
                           >
                             {tag}
                           </span>
                         ))}
                         {exp.tags.length > 4 && (
-                          <span className="px-3 py-1.5 text-xs font-medium text-gray-400 bg-gray-50 rounded-full">
+                          <span className="px-3 py-1.5 text-xs font-medium text-muted bg-surface/50 rounded-full border border-border">
                             +{exp.tags.length - 4}
                           </span>
                         )}
                       </div>
                     </div>
 
-                    {/* Détails expandables */}
+                    {/* ==========================================
+                        DÉTAILS EXPANDABLES
+                        ========================================== */}
                     <AnimatePresence>
                       {isExpanded && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
                           className="overflow-hidden"
                         >
-                          <div className="pt-6 mt-6 border-t border-gray-100">
-                            <p className="text-sm uppercase tracking-wider text-gray-400 font-medium mb-4">
+                          <div className="glass rounded-2xl p-6 mt-3">
+                            <p className="text-sm uppercase tracking-wider text-accent font-semibold mb-4 flex items-center gap-2">
+                              <CheckCircle2 className="w-4 h-4" />
                               Réalisations clés
                             </p>
                             <ul className="space-y-3">
@@ -166,21 +210,21 @@ export function Experience() {
                                   key={i}
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: i * 0.1 }}
+                                  transition={{ delay: i * 0.08 }}
                                   className="flex items-start gap-3"
                                 >
-                                  <CheckCircle2 className="w-5 h-5 text-[#7B6FFF] flex-shrink-0 mt-0.5" />
-                                  <span className="text-gray-600">{achievement}</span>
+                                  <CheckCircle2 className="w-4 h-4 text-green-badge flex-shrink-0 mt-0.5" />
+                                  <span className="text-muted text-sm leading-relaxed">{achievement}</span>
                                 </motion.li>
                               ))}
                             </ul>
 
                             {/* Tous les tags */}
-                            <div className="flex flex-wrap gap-2 mt-6">
+                            <div className="flex flex-wrap gap-2 mt-5 pt-4 border-t border-border">
                               {exp.tags.map((tag, i) => (
                                 <span
                                   key={i}
-                                  className="px-3 py-1.5 text-xs font-medium text-[#3D2DB5] bg-[#3D2DB5]/5 rounded-full border border-[#3D2DB5]/10"
+                                  className="px-3 py-1.5 text-xs font-medium text-accent bg-accent/10 rounded-full border border-accent/20"
                                 >
                                   {tag}
                                 </span>
@@ -191,10 +235,13 @@ export function Experience() {
                       )}
                     </AnimatePresence>
 
-                    {/* Bouton expand - Desktop */}
+                    {/* Bouton expand — Desktop */}
                     <button
-                      onClick={() => toggleExpand(exp.id)}
-                      className="hidden md:flex items-center gap-2 mt-4 text-sm font-medium text-[#7B6FFF] hover:text-[#3D2DB5] transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        toggleExpand(exp.id)
+                      }}
+                      className="hidden md:flex items-center gap-2 mt-4 ml-2 text-sm font-medium text-accent hover:text-foreground transition-colors"
                     >
                       {isExpanded ? (
                         <>
@@ -210,7 +257,7 @@ export function Experience() {
                     </button>
                   </div>
 
-                  {/* Espace vide pour l'alignement timeline */}
+                  {/* Espace vide pour alignement timeline */}
                   <div className="hidden md:block w-[calc(50%-2rem)]" />
                 </motion.div>
               )
@@ -220,15 +267,17 @@ export function Experience() {
 
         {/* Note de bas de section */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <p className="text-sm text-gray-400">
-            8 expériences majeures • Secteurs Banque, Assurance, Services, Retail
-          </p>
+          <div className="glass inline-block rounded-full px-6 py-3">
+            <p className="text-sm text-muted">
+              8 expériences majeures • Secteurs Banque, Assurance, Services, Retail
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
