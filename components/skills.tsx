@@ -192,7 +192,7 @@ export function Skills() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="border-gradient rounded-3xl p-8 bg-surface"
+              className="glass-strong rounded-3xl p-8 border border-accent/20"
             >
               {/* Overlay de contenu pour isolation du border-gradient */}
               <div className="relative z-10">

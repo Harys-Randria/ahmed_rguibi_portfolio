@@ -127,7 +127,7 @@ export function About() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <div className="border-gradient rounded-2xl p-6 md:p-8 mt-8">
+              <div className="glass-strong rounded-2xl p-6 md:p-8 mt-8 border border-accent/20 shadow-[0_0_30px_rgba(139,92,246,0.08)]">
                 <Quote className="w-8 h-8 text-accent/30 mb-3" />
                 <p className="text-xl text-foreground font-medium italic leading-relaxed">
                   "Ma méthode M.A.A.I.A.N. permet un diagnostic rapide et un redressement efficace des projets en situation critique."
