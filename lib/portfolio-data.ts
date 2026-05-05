@@ -1,7 +1,3 @@
-// Portfolio Data - Ahmed RGUIBI
-// Version modernisée - Design Light Mode
-// Dernière mise à jour : basée sur CV officiel
-
 export const portfolioData = {
   // ==========================================
   // INFORMATIONS PERSONNELLES
@@ -11,7 +7,7 @@ export const portfolioData = {
   fullTitle: 'Pilotage | Gouvernance | Redressement de projets complexes',
   tagline: '16+ ans d\'expertise • Intervention pompier • Méthode M.A.A.I.A.N.',
   
-  // Contact complet
+  // Contact 
   contact: {
     email: 'a.rguibi@maaian.fr',
     phone: '+33 (0)6 59 34 56 55',
@@ -19,14 +15,14 @@ export const portfolioData = {
     location: 'Saint-Cyr-l\'École, Île-de-France',
   },
   
-  // Langues (NOUVEAU)
+  // Langues 
   languages: [
     { language: 'Français', level: 'Natif', flag: '🇫🇷' },
     { language: 'Anglais', level: 'Bilingue', flag: '🇬🇧' },
     { language: 'Arabe', level: 'Courant', flag: '🇲🇦' },
   ],
   
-  // Certifications (ENRICHI)
+  // Certifications 
   certifications: [
     { 
       name: 'PRINCE2 Foundation & Practitioner', 
@@ -50,7 +46,7 @@ export const portfolioData = {
     { id: 'apropos', label: 'À propos' },
     { id: 'competences', label: 'Compétences' },
     { id: 'experience', label: 'Expérience' },
-    { id: 'certifications', label: 'Certifications' },
+    { id: 'recommandations', label: 'Recommandations' },
     { id: 'contact', label: 'Contact' },
   ],
   
@@ -80,11 +76,7 @@ export const portfolioData = {
   about: {
     title: 'À propos',
     introduction: 'PMO / Chef de projet senior avec plus de 16 ans d\'expérience dans le pilotage de projets IT et la gouvernance de programmes transverses complexes.',
-    description: `Expert en intervention "pompier" sur projets en difficulté avec développement de la méthode M.A.A.I.A.N. pour diagnostic rapide et redressement de projets en situation de chaos. 
-    
-    Solide expertise en structuration de la delivery, suivi budgétaire, reporting stratégique et coordination multi-interlocuteurs (MOA/MOE, DSI, métiers, prestataires). 
-    
-    Expérience significative en environnement international dans les secteurs banque, assurance et services.`,
+    description: `Expert en pilotage et redressement de projets IT complexes avec développement de la méthode M.A.A.I.A.N. pour diagnostic rapide et redressement de projets en situation de chaos. Solide expertise en structuration de la delivery, suivi budgétaire, reporting stratégique et coordination multi-interlocuteurs (MOA/MOE, DSI, métiers, prestataires). Expérience significative en environnement international dans les secteurs banque, assurance et services.`,
     highlights: [
       'Pilotage de projets en tension',
       'Méthode exclusive M.A.A.I.A.N.',

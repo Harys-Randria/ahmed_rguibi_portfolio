@@ -2,7 +2,7 @@
 
 import { portfolioData } from '@/lib/portfolio-data'
 import { motion, type Variants } from 'framer-motion'
-import { Award, Calendar, ExternalLink, GraduationCap, BookOpen, Building2, Globe, Sparkles } from 'lucide-react'
+import { Award, Calendar, ExternalLink, GraduationCap, BookOpen, Building2, Globe, Sparkles, Layers } from 'lucide-react'
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -40,7 +40,7 @@ export function Certifications() {
       year: '2024',
       description: 'Maîtrise opérationnelle sur la suite Atlassian pour le pilotage de projets, la collaboration et la gestion de services.',
       icon: '🛠️',
-      type: 'certification' as const,
+      type: 'maitrise' as const,
       verified: false,
     },
     {
@@ -72,7 +72,7 @@ export function Certifications() {
     { language: 'Arabe', level: 'Courant', flag: '🇲🇦', proficiency: 80 },
   ]
 
-  const getTypeConfig = (type: 'certification' | 'formation' | 'diplome') => {
+  const getTypeConfig = (type: 'certification' | 'formation' | 'diplome' | 'maitrise') => {
     switch (type) {
       case 'certification':
         return { 
@@ -100,6 +100,15 @@ export function Certifications() {
           borderBadge: 'border-emerald-400/30',
           label: 'Diplôme',
           accent: 'emerald',
+        }
+      case 'maitrise':
+        return {
+          icon: Layers,  // ou Wrench si tu préfères
+          badgeColor: 'text-purple-400',
+          bgBadge: 'bg-purple-400/10',
+          borderBadge: 'border-purple-400/30',
+          label: 'Maîtrise',
+          accent: 'purple',
         }
     }
   }
@@ -302,7 +311,7 @@ export function Certifications() {
         >
           {[
             { label: 'PRINCE2® Practitioner', value: 'Certifié 2020' },
-            { label: 'Atlassian Suite', value: 'Certifié 2024' },
+            { label: 'Atlassian Suite', value: 'Maîtrise avancée' },
             { label: 'Agile / Scrum', value: 'Maîtrise avancée' },
             { label: 'Cycle en V', value: 'Expert' },
           ].map((item, index) => (

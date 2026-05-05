@@ -66,6 +66,37 @@ export function Skills() {
         </motion.div>
 
         {/* ==========================================
+            BOTTOM STATS — Cartes glass
+            ========================================== */}
+        <motion.div
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mt-12 flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-12"
+        >
+          <div className="glass rounded-2xl px-8 py-5 text-center min-w-[130px]">
+            <p className="text-3xl font-bold text-accent">{totalSkills}</p>
+            <p className="text-xs text-muted uppercase tracking-wider mt-1">Compétences</p>
+          </div>
+          
+          {/* Séparateur visuel */}
+          <div className="w-px h-10 bg-border hidden md:block" />
+          
+          <div className="glass rounded-2xl px-8 py-5 text-center min-w-[130px]">
+            <p className="text-3xl font-bold text-accent">{skills.categories.length}</p>
+            <p className="text-xs text-muted uppercase tracking-wider mt-1">Catégories</p>
+          </div>
+          
+          <div className="w-px h-10 bg-border hidden md:block" />
+          
+          <div className="glass rounded-2xl px-8 py-5 text-center min-w-[130px]">
+            <p className="text-3xl font-bold text-accent">{skills.technicalDomains.length}</p>
+            <p className="text-xs text-muted uppercase tracking-wider mt-1">Domaines techniques</p>
+          </div>
+        </motion.div>
+
+        {/* ==========================================
             CATEGORY TABS — Modernisés
             ========================================== */}
         <motion.div
@@ -225,36 +256,7 @@ export function Skills() {
           </div>
         </div>
 
-        {/* ==========================================
-            BOTTOM STATS — Cartes glass
-            ========================================== */}
-        <motion.div
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-6 md:gap-8"
-        >
-          <div className="glass rounded-2xl px-8 py-5 text-center min-w-[130px]">
-            <p className="text-3xl font-bold text-accent">{totalSkills}</p>
-            <p className="text-xs text-muted uppercase tracking-wider mt-1">Compétences</p>
-          </div>
-          
-          {/* Séparateur visuel */}
-          <div className="w-px h-10 bg-border hidden md:block" />
-          
-          <div className="glass rounded-2xl px-8 py-5 text-center min-w-[130px]">
-            <p className="text-3xl font-bold text-accent">{skills.categories.length}</p>
-            <p className="text-xs text-muted uppercase tracking-wider mt-1">Catégories</p>
-          </div>
-          
-          <div className="w-px h-10 bg-border hidden md:block" />
-          
-          <div className="glass rounded-2xl px-8 py-5 text-center min-w-[130px]">
-            <p className="text-3xl font-bold text-accent">{skills.technicalDomains.length}</p>
-            <p className="text-xs text-muted uppercase tracking-wider mt-1">Domaines techniques</p>
-          </div>
-        </motion.div>
+        
       </div>
     </section>
   )
