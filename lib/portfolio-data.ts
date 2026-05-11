@@ -30,12 +30,6 @@ export const portfolioData = {
       year: '2020',
       icon: 'Award',
     },
-    { 
-      name: 'Jira / Confluence / Jira Service Management', 
-      issuer: 'Atlassian', 
-      year: '2024',
-      icon: 'Layers',
-    },
   ],
   
   // ==========================================

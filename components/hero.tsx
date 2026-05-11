@@ -24,7 +24,7 @@ const item: Variants = {
     y: 0, 
     transition: { 
       duration: 0.5, 
-      ease: 'easeOut' // Framer Motion reconnaît cette string spécifique
+      ease: 'easeOut' 
     } 
   },
 }
@@ -57,9 +57,6 @@ export function Hero() {
             <div className="neubrutal px-5 py-2 rounded-xl text-sm font-semibold text-foreground flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-badge" style={{ boxShadow: '0 0 8px #22c55e' }} />
               {certifications[0].name}
-            </div>
-            <div className="glass px-5 py-2 rounded-xl text-sm font-medium text-muted">
-              + {certifications.length - 1} certifications
             </div>
           </motion.div>
 
